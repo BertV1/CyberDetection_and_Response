@@ -20,10 +20,17 @@
 <u>Layout</u>
 
 * all properties start from the `CVE_Items` root property
-* an Item in `CVE_Items` contains **3 main properties**
+
+* an Item in `CVE_Items` contains **3 main properties** 
+
   * `cve`
   * `configurations`
   * `impact`
+
+  and two singular properties
+
+  * `publishedDate`
+  * `lastModifiedDate`
 
 
 
@@ -31,11 +38,11 @@
 
 * To serve our needs best we will need the following properties
 
-| n°   | Property name   | JSON property name | JSON path                                                    |
-| ---- | --------------- | ------------------ | ------------------------------------------------------------ |
-| 1    | CVE title       | ID                 | CVE_Items[**!**] -> cve -> CVE_data_meta -> ID               |
-| 2    | CVE description | value              | CVE_Items[**!**] -> cve -> description -> description_data -> value |
-| 3    | CVSS score      | baseScore          | CVE_Items[**!**] -> impact -> impact -> baseMetricV**?** -> cvssV**?** -> baseScore |
+| n°   | Property name   | JSON property name | JSON path                                                    | JSON value type |
+| ---- | --------------- | ------------------ | ------------------------------------------------------------ | --------------- |
+| 1    | CVE title       | ID                 | CVE_Items[**!**] -> cve -> CVE_data_meta -> ID               | str             |
+| 2    | CVE description | value              | CVE_Items[**!**] -> cve -> description -> description_data -> value | str             |
+| 3    | CVE CVSS score  | baseScore          | CVE_Items[**!**] -> impact -> impact -> baseMetricV**?** -> cvssV**?** -> baseScore | float           |
 
 \***!** the CVE currently being queried
 
@@ -45,9 +52,10 @@
 
 * These properties could be useful in the future, so it would be wise to already look at ways how to extract them
 
-| n°   | Property name               | JSON property name | JSON path |
-| ---- | --------------------------- | ------------------ | --------- |
-| 1    | CVE access vector           | accessVector       |           |
-| 2    | CVE access complexity       | accessComplexity   |           |
-| 3    | CVE requires authentication | authentication     |           |
+| n°   | Property name               | JSON property name | JSON path                                                    | JSON value type     |
+| ---- | --------------------------- | ------------------ | ------------------------------------------------------------ | ------------------- |
+| 1    | CVE access vector           | accessVector       | CVE_Items[**!**] -> impact -> impact -> baseMetricV**?** -> cvssV**?** -> accessVector | str                 |
+| 2    | CVE access complexity       | accessComplexity   | CVE_Items[**!**] -> impact -> impact -> baseMetricV**?** -> cvssV**?** -> accessComplexity | str                 |
+| 3    | CVE requires authentication | authentication     | CVE_Items[**!**] -> impact -> impact -> baseMetricV**?** -> cvssV**?** -> authentication | bool                |
+| 4    | CVE date of publication     | publishedDate      | CVE_Items[**!**] -> publishedDate                            | str (ISO 8601 date) |
 
