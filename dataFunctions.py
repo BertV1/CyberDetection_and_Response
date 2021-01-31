@@ -12,7 +12,7 @@ def getCVEbyYear(CVEIDs):
     cve2001 = 0
     cve2002 = 0
     rest = 0
-    for cveID in cveIDs:
+    for cveID in CVEIDs:
         if 'CVE-1999' in cveID:
             cve1999 += 1
         elif 'CVE-2000' in cveID:
@@ -25,4 +25,4 @@ def getCVEbyYear(CVEIDs):
             rest += 1
             print(cveID)
     if rest == 0: #todo: c
-        return (list(cve1999,cve2000,cve2001,cve2002))
+        return (list([cve1999,cve2000,cve2001,cve2002]))
