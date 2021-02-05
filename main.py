@@ -1,7 +1,7 @@
 import json
 import dataFunctions as DF
 from bokeh.io import show, output_notebook
-from bokeh.plotting import figure
+from bokeh.plotting import figure, output_file
 from bokeh.models import ColumnDataSource,ranges,LabelSet
 from bokeh.palettes import PuBu
 
@@ -14,14 +14,11 @@ cveJson = json.loads(cve2002File.read())
 #     print(cve['cve']['CVE_data_meta']['ID'])
     
 
-# TOTAL COUNT CVE
-cveIDs = DF.getCVEIDs(cveJson)
-ct_CVEs = len(cveIDs)
-print(ct_CVEs)
 
 
 
 # VISUAL OF CVEs BY YEAR
+cveIDs = DF.getCVEIDs(cveJson)
 CVEsByYear = DF.getCVEbyYear(cveIDs)
 years = ['1999','2000','2001','2002']
 x_label = "Years"
@@ -52,7 +49,9 @@ lst_pubdateANDcvss = DF.getCVEpubDateAndScore(cveJson)
 # dat struct: lst_pubdateANDcvss = [[pubdate,cvss],[pubdate,cvss]...]
 
 
-lst_1993_to_1996_pubdate = DF.getMeanCVSSbyMonth(DF.getCVSSbyMultipleYears(lst_pubdateANDcvss,['1993','1994','1995','1996']))
+
+months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','SEP','OCT','NOV','DEC']
+lst_1993_to_1996_pubdate = DF.getAverageCVSScountByMonth(DF.getCVSSbyMultipleYears(lst_pubdateANDcvss,['1993','1994','1995','1996']))
 lst_1997_pubdate = DF.getAverageCVSScountByMonth(DF.getCVSSbyYear(lst_pubdateANDcvss,'1997'))
 lst_1998_pubdate = DF.getAverageCVSScountByMonth(DF.getCVSSbyYear(lst_pubdateANDcvss,'1998'))
 lst_1999_pubdate = DF.getAverageCVSScountByMonth(DF.getCVSSbyYear(lst_pubdateANDcvss,'1999'))
@@ -60,50 +59,73 @@ lst_2000_pubdate = DF.getAverageCVSScountByMonth(DF.getCVSSbyYear(lst_pubdateAND
 lst_2001_pubdate = DF.getAverageCVSScountByMonth(DF.getCVSSbyYear(lst_pubdateANDcvss,'2001'))
 lst_2002_pubdate = DF.getAverageCVSScountByMonth(DF.getCVSSbyYear(lst_pubdateANDcvss,'2002'))
 lst_2003_pubdate = DF.getAverageCVSScountByMonth(DF.getCVSSbyYear(lst_pubdateANDcvss,'2003'))
-months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','SEP','OCT','NOV','DEC']
+
+output_file("avgCVSScountByMonthByYear_1999-2000-2001.html")
+x_label_cvssByMonth = "Months"
+y_label_cvssByMonth = "CVSS score"
+src_cvssByMonth = ColumnDataSource(
+    data=dict(
+        x=months,
+        y1=lst_1999_pubdate,
+        y2=lst_2000_pubdate,
+        y3=lst_2001_pubdate
+        )
+)
+plt_cvssByMonth = figure(
+    plot_width=1200,
+    plot_height=1000,
+    title='Average CVSS score by month for 1999, 2000 & 2001',
+    tools='save')
+
+plt_cvssByMonth.vline_Stack(['y1','y2','y3'],x='x',source=src_cvssByMonth)
+show(plt_cvssByMonth)
+
+##############
+##          ##
+##  COUNTS  ##
+##          ##
+##############
 
 
+for pubdateandcvss in lst_pubdateANDcvss:
+    #print(pubdateandcvss[0],'->',pubdateandcvss[1])
+    if '1993' in pubdateandcvss[0]:
+        lst_1993_to_1996_pubdate += 1
+    elif '1994' in pubdateandcvss[0]:
+        lst_1993_to_1996_pubdate += 1     
+    elif '1995' in pubdateandcvss[0]:
+        lst_1993_to_1996_pubdate += 1
+    elif '1996' in pubdateandcvss[0]:
+        lst_1993_to_1996_pubdate += 1    
+    elif '1997' in pubdateandcvss[0]:
+        lst_1997_pubdate += 1
+    elif '1998' in pubdateandcvss[0]:
+        lst_1998_pubdate += 1    
+    elif '1999' in pubdateandcvss[0]:
+        lst_1999_pubdate += 1
+    elif '2000' in pubdateandcvss[0]:
+        lst_2000_pubdate += 1
+    elif '2001' in pubdateandcvss[0]:
+         lst_2001_pubdate += 1
+    elif '2002' in pubdateandcvss[0]:
+        lst_2002_pubdate += 1
+    elif '2003' in pubdateandcvss[0]:
+        lst_2003_pubdate += 1
+    else:
+        rest += 1
 
+print(lst_1993_to_1996_pubdate)
+print(lst_1997_pubdate)
+print(lst_1998_pubdate)
+print(lst_1999_pubdate)
+print(lst_2000_pubdate)
+print(lst_2001_pubdate)
+print(lst_2002_pubdate)
+print(lst_2003_pubdate)
+print('--------------------')
+print(rest)
 
-
-
+ct_CVEs = len(cveIDs)
+print(ct_CVEs)
 
 cve2002File.close()
-
-# for pubdateandcvss in lst_pubdateANDcvss:
-#     #print(pubdateandcvss[0],'->',pubdateandcvss[1])
-#     if '1993' in pubdateandcvss[0]:
-#         lst_1993_to_1996_pubdate += 1
-#     elif '1994' in pubdateandcvss[0]:
-#         lst_1993_to_1996_pubdate += 1     
-#     elif '1995' in pubdateandcvss[0]:
-#         lst_1993_to_1996_pubdate += 1
-#     elif '1996' in pubdateandcvss[0]:
-#         lst_1993_to_1996_pubdate += 1    
-#     elif '1997' in pubdateandcvss[0]:
-#         lst_1997_pubdate += 1
-#     elif '1998' in pubdateandcvss[0]:
-#         lst_1998_pubdate += 1    
-#     elif '1999' in pubdateandcvss[0]:
-#         lst_1999_pubdate += 1
-#     elif '2000' in pubdateandcvss[0]:
-#         lst_2000_pubdate += 1
-#     elif '2001' in pubdateandcvss[0]:
-#          lst_2001_pubdate += 1
-#     elif '2002' in pubdateandcvss[0]:
-#         lst_2002_pubdate += 1
-#     elif '2003' in pubdateandcvss[0]:
-#         lst_2003_pubdate += 1
-#     else:
-#         rest += 1
-# print(lst_1993_to_1996_pubdate)
-# print(lst_1997_pubdate)
-# print(lst_1998_pubdate)
-# print(lst_1999_pubdate)
-# print(lst_2000_pubdate)
-# print(lst_2001_pubdate)
-# print(lst_2002_pubdate)
-# print(lst_2003_pubdate)
-# print('--------------------')
-# print(rest)
-

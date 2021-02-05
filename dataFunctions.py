@@ -39,7 +39,6 @@ def getCVSSbyMultipleYears(lst_pubdateAndCvss,lst_years):
                 lst_pubDateANDcvssBYmultipleYears.append(pubDateandcvss)
     return lst_pubDateANDcvssBYmultipleYears
 
-
 def getCVSSavgByMonth(lst_pubdate_cvss_oneYear_oneMonth):
     cvssSum = 0
     cvssCount = 0
