@@ -49,9 +49,55 @@ plt_CVEbyYear.add_layout(labels)
 #show(plt_CVEbyYear)
 
 lst_pubdateANDcvss = DF.getCVEpubDateAndScore(cveJson)
+# dat struct: lst_pubdateANDcvss = [[pubdate,cvss],[pubdate,cvss]...]
 
+
+lst_1993_to_1996_pubdate = getMeanCVSSbyMonth(getCVSSbyYear(lst_pubdateANDcvss,'1996'))
+lst_1997_pubdate = getMeanCVSSbyMonth(getCVSSbyYear(lst_pubdateANDcvss,'1997'))
+lst_1998_pubdate = getMeanCVSSbyMonth(getCVSSbyYear(lst_pubdateANDcvss,'1998'))
+lst_1999_pubdate = getMeanCVSSbyMonth(getCVSSbyYear(lst_pubdateANDcvss,'1999'))
+lst_2000_pubdate = getMeanCVSSbyMonth(getCVSSbyYear(lst_pubdateANDcvss,'2000'))
+lst_2001_pubdate = getMeanCVSSbyMonth(getCVSSbyYear(lst_pubdateANDcvss,'2001'))
+lst_2002_pubdate = getMeanCVSSbyMonth(getCVSSbyYear(lst_pubdateANDcvss,'2002'))
+lst_2003_pubdate = getMeanCVSSbyMonth(getCVSSbyYear(lst_pubdateANDcvss,'2003'))
+rest = 0
+months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','SEP','OCT','NOV','DEC']
 for pubdateandcvss in lst_pubdateANDcvss:
-    print(pubdateandcvss[0],'->',pubdateandcvss[1])
+    #print(pubdateandcvss[0],'->',pubdateandcvss[1])
+    if '1993' in pubdateandcvss[0]:
+        lst_1993_to_1996_pubdate += 1
+    elif '1994' in pubdateandcvss[0]:
+        lst_1993_to_1996_pubdate += 1     
+    elif '1995' in pubdateandcvss[0]:
+        lst_1993_to_1996_pubdate += 1
+    elif '1996' in pubdateandcvss[0]:
+        lst_1993_to_1996_pubdate += 1    
+    elif '1997' in pubdateandcvss[0]:
+        lst_1997_pubdate += 1
+    elif '1998' in pubdateandcvss[0]:
+        lst_1998_pubdate += 1    
+    elif '1999' in pubdateandcvss[0]:
+        lst_1999_pubdate += 1
+    elif '2000' in pubdateandcvss[0]:
+        lst_2000_pubdate += 1
+    elif '2001' in pubdateandcvss[0]:
+         lst_2001_pubdate += 1
+    elif '2002' in pubdateandcvss[0]:
+        lst_2002_pubdate += 1
+    elif '2003' in pubdateandcvss[0]:
+        lst_2003_pubdate += 1
+    else:
+        rest += 1
+print(lst_1993_to_1996_pubdate)
+print(lst_1997_pubdate)
+print(lst_1998_pubdate)
+print(lst_1999_pubdate)
+print(lst_2000_pubdate)
+print(lst_2001_pubdate)
+print(lst_2002_pubdate)
+print(lst_2003_pubdate)
+print('--------------------')
+print(rest)
 
 
 

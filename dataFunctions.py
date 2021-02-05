@@ -24,8 +24,17 @@ def getCVEpubDateAndScore(cveJsonFile):
             CVE_pubDate_CVSS.append(list([cve['publishedDate'],cve['impact']['baseMetricV2']['cvssV2']['baseScore']]))
     return CVE_pubDate_CVSS
 
-def handleMonths(list):
+def getCVSSbyYear(lst_pubdateAndCvss,year):
+    lst_pubdateANDcvssBYyear = []
+    for pubdateandcvss in lst_pubdateAndCvss:
+        if year in pubdateandcvss[0]:
+            lst_pubdateANDcvssBYyear.append(pubdateandcvss)
+    return lst_pubdateANDcvssBYyear
+
+def getMeanCVSSbyMonth(lst_pubdate_cvss_oneYear):
     return -1
+
+
 
 def getCVEbyYear(CVEIDs):
     cve1999 = 0
