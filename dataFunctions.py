@@ -1,9 +1,23 @@
 def getCVEIDs(cveJsonFile):
     cveIDs = []
     for cve in cveJsonFile['CVE_Items']:
-        print(cve['cve']['CVE_data_meta']['ID'])
+        #print(cve['cve']['CVE_data_meta']['ID'])
         cveIDs.append(cve['cve']['CVE_data_meta']['ID'])
     return cveIDs
+
+# cve pub date by CVE-1999 = key
+# cve cvss score of key = value
+# data point  = sum(value)/count(key)
+# plot datapoints per month for each available year
+# pub date format: YYYY-MM-DDTHH:MMZ
+
+years = ['1998','1999','2000','2001','2002']
+
+def myFunc(cveJsonFile):
+    for cve in cveJsonFile['CVE_Items']:
+        print(cve['publishedDate'])
+
+    return -1
 
 
 def getCVEbyYear(CVEIDs):
