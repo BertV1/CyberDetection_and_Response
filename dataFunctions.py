@@ -16,12 +16,12 @@ years = ['1998','1999','2000','2001','2002','2003']
 def getCVEpubDateAndScore(cveJsonFile):
     #todo discarding entries after 2002
     #todo only metric V2 items (97 are not baseMetricV2), none are V3
-    CVE_pubDate_CVSS = {}
+    # dict keys are unique dumbo
+    CVE_pubDate_CVSS = []
     for cve in cveJsonFile['CVE_Items']:
-        #print(cve['publishedDate'],'->')
         if 'baseMetricV2' in cve['impact']:
-            #print(str(cve['impact']['baseMetricV2']['cvssV2']['baseScore']))
-            CVE_pubDate_CVSS[cve['publishedDate']] = cve['impact']['baseMetricV2']['cvssV2']['baseScore']
+            #CVE_pubDate_CVSS[] = 
+            CVE_pubDate_CVSS.append(list([cve['publishedDate'],cve['impact']['baseMetricV2']['cvssV2']['baseScore']]))
     return CVE_pubDate_CVSS
 
 def handleMonths(list):

@@ -48,10 +48,10 @@ plt_CVEbyYear.vbar(source=labelSrc, x='x',top='y',bottom=0, width=0.7,color=PuBu
 plt_CVEbyYear.add_layout(labels)
 #show(plt_CVEbyYear)
 
-pubdateANDcvss = DF.getCVEpubDateAndScore(cveJson)
+lst_pubdateANDcvss = DF.getCVEpubDateAndScore(cveJson)
 
-
-
+for pubdateandcvss in lst_pubdateANDcvss:
+    print(pubdateandcvss[0],'->',pubdateandcvss[1])
 
 
 
