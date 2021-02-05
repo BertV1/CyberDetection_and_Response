@@ -1,7 +1,7 @@
 def getCVEIDs(cveJsonFile):
     cveIDs = []
     for cve in cveJsonFile['CVE_Items']:
-        # print(cve['cve']['CVE_data_meta']['ID'])
+        print(cve['cve']['CVE_data_meta']['ID'])
         cveIDs.append(cve['cve']['CVE_data_meta']['ID'])
     return cveIDs
 

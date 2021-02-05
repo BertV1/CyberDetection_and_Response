@@ -43,7 +43,6 @@ plt_CVEbyYear = figure(
 labels = LabelSet(x='x',y='y', text='y', level='glyph',
                 x_offset=-13.5, y_offset=0, source=labelSrc,
                 render_mode='canvas')
-
 plt_CVEbyYear.vbar(source=labelSrc, x='x',top='y',bottom=0, width=0.7,color=PuBu[7][3])
 plt_CVEbyYear.add_layout(labels)
 show(plt_CVEbyYear)
