@@ -11,14 +11,21 @@ def getCVEIDs(cveJsonFile):
 # plot datapoints per month for each available year
 # pub date format: YYYY-MM-DDTHH:MMZ
 
-years = ['1998','1999','2000','2001','2002']
+years = ['1998','1999','2000','2001','2002','2003']
 
-def myFunc(cveJsonFile):
+def getCVEpubDateAndScore(cveJsonFile):
+    #todo discarding entries after 2002
+    #todo only metric V2 items (97 are not baseMetricV2), none are V3
+    CVE_pubDate_CVSS = {}
     for cve in cveJsonFile['CVE_Items']:
-        print(cve['publishedDate'])
+        #print(cve['publishedDate'],'->')
+        if 'baseMetricV2' in cve['impact']:
+            #print(str(cve['impact']['baseMetricV2']['cvssV2']['baseScore']))
+            CVE_pubDate_CVSS[cve['publishedDate']] = cve['impact']['baseMetricV2']['cvssV2']['baseScore']
+    return CVE_pubDate_CVSS
 
+def handleMonths(list):
     return -1
-
 
 def getCVEbyYear(CVEIDs):
     cve1999 = 0

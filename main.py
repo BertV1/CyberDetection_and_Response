@@ -20,6 +20,7 @@ ct_CVEs = len(cveIDs)
 print(ct_CVEs)
 
 
+
 # VISUAL OF CVEs BY YEAR
 CVEsByYear = DF.getCVEbyYear(cveIDs)
 years = ['1999','2000','2001','2002']
@@ -45,9 +46,9 @@ labels = LabelSet(x='x',y='y', text='y', level='glyph',
                 render_mode='canvas')
 plt_CVEbyYear.vbar(source=labelSrc, x='x',top='y',bottom=0, width=0.7,color=PuBu[6][3])
 plt_CVEbyYear.add_layout(labels)
-show(plt_CVEbyYear)
+#show(plt_CVEbyYear)
 
-
+pubdateANDcvss = DF.getCVEpubDateAndScore(cveJson)
 
 
 
