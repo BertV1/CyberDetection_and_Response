@@ -82,13 +82,13 @@ plt_cvssByMonth = figure(
     y_range=ranges.Range1d(start=0,end=10)
     )
 plt_cvssByMonth.add_layout(Title(
-    text='Average CVSS score by month for 1999-2002.',
+    text='Average CVSS score by month for 1997-2002.',
     align='center',
     text_font_size='1.5em'),'above')
 #plt_cvssByMonth.vline_stack(['y1','y2','y3'],x='x',source=src_cvssByMonth)
 
-plt_cvssByMonth.line(months,lst_1997_pubdate,legend_label='1997',line_color='dark brown',line_width=3)
-plt_cvssByMonth.circle(months,lst_1997_pubdate,legend_label='1997',line_color='dark brown',fill_color='dark brown',size=8)
+plt_cvssByMonth.line(months,lst_1997_pubdate,legend_label='1997',line_color='aquamarine',line_width=3)
+plt_cvssByMonth.circle(months,lst_1997_pubdate,legend_label='1997',line_color='aquamarine',fill_color='aquamarine',size=8)
 
 plt_cvssByMonth.line(months,lst_1998_pubdate,legend_label='1998',line_color='orange',line_width=3)
 plt_cvssByMonth.circle(months,lst_1998_pubdate,legend_label='1998',line_color='orange',fill_color='orange',size=8)
