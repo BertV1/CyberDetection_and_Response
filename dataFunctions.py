@@ -40,15 +40,17 @@ def getCVSSbyMultipleYears(lst_pubdateAndCvss,lst_years):
     return lst_pubDateANDcvssBYmultipleYears
 
 def getCVSSavgByMonth(lst_pubdate_cvss_oneYear_oneMonth):
-    cvssSum = 0
+    cvssSum = 0.0
     cvssCount = 0
     for pubDate_cvss in lst_pubdate_cvss_oneYear_oneMonth:
-        cvssSum += pubDate_cvss[1]
+        #print("sum "+str(cvssSum)+" & count "+str(cvssCount)+" of "+pubDate_cvss[0])
+        cvssSum += pubDate_cvss
         cvssCount += 1
-    return cvssSum // cvssCount
+    avg = cvssSum / cvssCount
+    return avg
 
 def getAverageCVSScountByMonth(lst_pubdate_cvss_oneYear):
-    lst_meanCVSSbyMonth = []
+    lst_avgCVSSbyMonth = []
     JAN = []
     FEB = []
     MAR = []
@@ -65,34 +67,35 @@ def getAverageCVSScountByMonth(lst_pubdate_cvss_oneYear):
     for pubDateandcvss in lst_pubdate_cvss_oneYear:
         month = pubDateandcvss[0].split('-')[1]
         if month == '01':
-            JAN.append(pubDateandcvss)
+            JAN.append(pubDateandcvss[1])
         elif month == '02':
-            FEB.append(pubDateandcvss)
+            FEB.append(pubDateandcvss[1])
         elif month == '03':
-            MAR.append(pubDateandcvss)
+            MAR.append(pubDateandcvss[1])
         elif month == '04':
-            APR.append(pubDateandcvss)
+            APR.append(pubDateandcvss[1])
         elif month == '05':
-            MAY.append(pubDateandcvss)
+            MAY.append(pubDateandcvss[1])
         elif month == '06':
-            JUN.append(pubDateandcvss)
+            JUN.append(pubDateandcvss[1])
         elif month == '07':
-            JUL.append(pubDateandcvss)
+            JUL.append(pubDateandcvss[1])
         elif month == '08':
-            AUG.append(pubDateandcvss)
+            AUG.append(pubDateandcvss[1])
         elif month == '09':
-            SEP.append(pubDateandcvss)
+            SEP.append(pubDateandcvss[1])
         elif month == '10':
-            OCT.append(pubDateandcvss)
+            OCT.append(pubDateandcvss[1])
         elif month == '11':
-            NOV.append(pubDateandcvss)
+            NOV.append(pubDateandcvss[1])
         elif month == '12':
-            DEC.append(pubDateandcvss)
+            DEC.append(pubDateandcvss[1])
         else:
             print('wtf are you doing, wrong date format????')
     for month in MONTHS:
-        lst_meanCVSSbyMonth.append(getCVSSavgByMonth(month))
-    return lst_meanCVSSbyMonth
+        lst_avgCVSSbyMonth.append(getCVSSavgByMonth(month))
+        #print(getCVSSavgByMonth(month))
+    return lst_avgCVSSbyMonth
 
 
 
