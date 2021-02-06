@@ -46,8 +46,10 @@ def getCVSSavgByMonth(lst_pubdate_cvss_oneYear_oneMonth):
         #print("sum "+str(cvssSum)+" & count "+str(cvssCount)+" of "+pubDate_cvss[0])
         cvssSum += pubDate_cvss
         cvssCount += 1
-    avg = cvssSum / cvssCount
-    return avg
+    if cvssCount != 0: #todo check if cve count for this month is not zero
+        return cvssSum / cvssCount
+    else:
+        return 0
 
 def getAverageCVSScountByMonth(lst_pubdate_cvss_oneYear):
     lst_avgCVSSbyMonth = []
