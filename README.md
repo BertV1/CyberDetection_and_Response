@@ -11,6 +11,8 @@
        * working with json data, this is a must
      * bokeh
        * have worked with bokeh when creating visualisations in Sentinel notebooks 
+     * random
+       * for getting access to those sweet, sweet random numbers
 3. As code editor Visual Studio Code (**VSC**) will be used
 4. for CI and ease of use, **GitKraken** seems ideal at this point
    * version 5.0.4, because we can work with private repos without purchasing a license.
