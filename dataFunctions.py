@@ -121,3 +121,7 @@ def getCVEbyYear(CVEIDs):
             print(cveID)
     if rest == 0: #todo: c
         return (list([cve1999,cve2000,cve2001,cve2002]))
+
+def sortIntStrings(lst_stringsThatAreInts):
+    numbers = [int(x) for x in lst_stringsThatAreInts]
+    return sorted(numbers)

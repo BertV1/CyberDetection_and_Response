@@ -3,6 +3,7 @@ from bokeh.models import ColumnDataSource,ranges,LabelSet,Title
 from bokeh.plotting import figure,show
 from bokeh.palettes import PuBu
 import random
+
 ####################################
 ##                                ##
 ##    CVE COUNT BY CVE YEAR ID    ##
@@ -23,7 +24,7 @@ def bar_chart_CVE_by_ID(JSON_CVE_DATA):
     plt_bar_chart_CVE_by_ID = figure(
         plot_height=750,
         plot_width=600,
-        tools='save,resize',
+        toolbar_location='right',
         x_axis_label=x_label,
         y_axis_label=y_label,
         title='CVE-ID based total CVE count by Year: 1999-2002',
@@ -64,7 +65,7 @@ def line_chart_avg_CVE_per_month_by_year(JSON_CVE_DATA,lst_years):
     plt_line_chart_avg_CVE_per_month_by_year = figure(
         plot_width=1200,
         plot_height=1000,
-        tools='save,resize',
+        toolbar_location='right',
         x_axis_label=x_label,
         y_axis_label=y_label,
         x_minor_ticks=10,
