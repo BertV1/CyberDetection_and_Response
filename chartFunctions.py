@@ -81,8 +81,8 @@ def line_chart_avg_CVE_per_month_by_year(JSON_CVE_DATA,lst_years):
     if len(lst_years) == len(lst_data_for_chosen_years):
         randomNr = random.sample(range(0,len(possibleColours)),len(lst_years))
         for i in range(len(lst_data_for_chosen_years)):
-            plt_line_chart_avg_CVE_per_month_by_year.line(months,lst_data_for_chosen_years[i],legend_label=lst_years[i],line_color=possibleColours[randomNr[i]],line_width=3)
-            plt_line_chart_avg_CVE_per_month_by_year.circle(months,lst_data_for_chosen_years[i],legend_label=lst_years[i],line_color=possibleColours[randomNr[i]],fill_color=possibleColours[randomNr[i]],size=8)
+            plt_line_chart_avg_CVE_per_month_by_year.line(months,lst_data_for_chosen_years[i],legend_label=str(lst_years[i]),line_color=possibleColours[randomNr[i]],line_width=3)
+            plt_line_chart_avg_CVE_per_month_by_year.circle(months,lst_data_for_chosen_years[i],legend_label=str(lst_years[i]),line_color=possibleColours[randomNr[i]],fill_color=possibleColours[randomNr[i]],size=8)
   
     show(plt_line_chart_avg_CVE_per_month_by_year)
 
