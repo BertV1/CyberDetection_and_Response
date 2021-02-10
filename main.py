@@ -9,7 +9,6 @@ def prepareData(file):
     fileData.close()
     return jsonData
 
-
 def getUserInputForYears():
     lst_preferredYears = []
     print('input years you want to see in the chart\n & end with END!')
@@ -36,7 +35,15 @@ elif int(chartChoice) == 3:
     CF.line_chart_avg_CVE_per_month_by_year()
 
 
-# testing
+
+
 # for cve in cveJson['CVE_Items']:
 #     print(cve['cve']['CVE_data_meta']['ID'])
+
 # dat struct: lst_pubdateANDcvss = [[pubdate,cvss],[pubdate,cvss]...]
+
+# cve pub date by CVE-1999 = key
+# cve cvss score of key = value
+# data point  = sum(value)/count(key)
+# plot datapoints per month for each available year
+# pub date format: YYYY-MM-DDTHH:MMZ

@@ -5,22 +5,12 @@ def getCVEIDs(cveJsonFile):
         cveIDs.append(cve['cve']['CVE_data_meta']['ID'])
     return cveIDs
 
-# cve pub date by CVE-1999 = key
-# cve cvss score of key = value
-# data point  = sum(value)/count(key)
-# plot datapoints per month for each available year
-# pub date format: YYYY-MM-DDTHH:MMZ
-
-years = ['1998','1999','2000','2001','2002','2003']
-
 def getCVEpubDateAndScore(cveJsonFile):
     #todo discarding entries after 2002
     #todo only metric V2 items (97 are not baseMetricV2), none are V3
-    # dict keys are unique dumbo
     CVE_pubDate_CVSS = []
     for cve in cveJsonFile['CVE_Items']:
         if 'baseMetricV2' in cve['impact']:
-            #CVE_pubDate_CVSS[] = 
             CVE_pubDate_CVSS.append(list([cve['publishedDate'],cve['impact']['baseMetricV2']['cvssV2']['baseScore']]))
     return CVE_pubDate_CVSS
 
@@ -98,8 +88,6 @@ def getAverageCVSScountByMonth(lst_pubdate_cvss_oneYear):
         lst_avgCVSSbyMonth.append(getCVSSavgByMonth(month))
         #print(getCVSSavgByMonth(month))
     return lst_avgCVSSbyMonth
-
-
 
 def getCVEbyYear(CVEIDs):
     cve1999 = 0
