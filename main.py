@@ -29,6 +29,8 @@ if int(chartChoice) == 1:
     CF.bar_chart_CVE_by_ID(JsonCVEs)
 elif int(chartChoice) == 2:
     lst_preferredYears = getUserInputForYears()
+    
+
     CF.line_chart_avg_CVE_per_month_by_year(JsonCVEs,DF.sortIntStrings(lst_preferredYears))
 elif int(chartChoice) == 3:
     getUserInputForYears()
