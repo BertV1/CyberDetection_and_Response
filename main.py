@@ -23,6 +23,7 @@ def getUserInputForYears():
 
 JsonCVEs = prepareData('datafeeds/nvdcve-1.1-2002.json')
 chartChoice = input("Type '1' for Chart 1,\nType '2' for Chart 2\nType 3 for both\n CHART: ")
+CF.bar_chart_CVE_count_by_CVSS_score_for_years(JSON_CVE_DATA=JsonCVEs,lst_years='1999')
 
 if int(chartChoice) == 1:
     CF.bar_chart_CVE_by_ID(JsonCVEs)
