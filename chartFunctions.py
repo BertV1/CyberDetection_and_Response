@@ -93,10 +93,26 @@ def bar_chart_CVE_count_by_CVSS_score_for_years(JSON_CVE_DATA,lst_years):
 
     data_forChosenYear = DF.getCVSSCountBracketsByYear(lst_pubDate_and_cvss_byYear)
     lbl_cvssBrackets = ['[0-1]','[1-2]','[2-3]','[3-4]','[4-5]','[5-6]','[6-7]','[7-8]','[8-9]','[9-10]']
+    x_label = 'CVSS brackets'
+    y_label = 'CVE Count'
+    
     plt_bar_chart_CVE_count_by_CVSS_score_for_years = figure(
         plot_width=1200,
         plot_height=1000,
+        toolbar_location='right',
+        x_axis_label=x_label,
+        y_axis_label=y_label,
+        x_range=lbl_cvssBrackets
     )
+
+    plt_bar_chart_CVE_count_by_CVSS_score_for_years.add_layout(Title(
+        text='CVE count by CVSS score bracket for selected years',
+        align='center',
+        text_font_size='1.5em'),'above')
+
+    plt_bar_chart_CVE_count_by_CVSS_score_for_years.vbar(x=lbl_cvssBrackets,top=data_forChosenYear,width=0.9)
+
+    show(plt_bar_chart_CVE_count_by_CVSS_score_for_years)
     
 
 
