@@ -3,7 +3,7 @@ from bokeh.models import ColumnDataSource,ranges,LabelSet,Title,FactorRange
 from bokeh.plotting import figure,show
 from bokeh.palettes import PuBu
 from bokeh.transform import factor_cmap
-from bokeh.palettes import Category20
+from bokeh.palettes import Spectral6
 import random
 
 ####################################
@@ -111,8 +111,8 @@ def bar_chart_CVE_count_by_CVSS_score_for_years(JSON_CVE_DATA,lst_years):
         for i in range(len(lst_data_for_chosen_years)):
             dataForChosenYears[year[i]] = lst_data_for_chosen_years[i]
     
-    x = [(lbl_cvssBrackets,lst_years) for cvssBracket in lbl_cvssBrackets for year in lst_years]
-    counts = sum(zip(*lst_data_for_chosen_years,()))
+    x = [(cvssBracket,year) for cvssBracket in lbl_cvssBrackets for year in lst_years]
+    counts = sum(zip(*lst_data_for_chosen_years),())
     source = ColumnDataSource(data=dict(x=x,counts=counts))
 
 
@@ -139,7 +139,7 @@ def bar_chart_CVE_count_by_CVSS_score_for_years(JSON_CVE_DATA,lst_years):
 
     #plt_bar_chart_CVE_count_by_CVSS_score_for_years.vbar(x=lbl_cvssBrackets,top=data_forChosenYear,width=0.9)
 
-    plt_bar_chart_CVE_count_by_CVSS_score_for_years.vbar(x='x',top='counts',width=0.9,source=source, line_color='white', fill_color=factor_cmap('x',palette=Category20,factors=lst_years,start=1, end=2))
+    plt_bar_chart_CVE_count_by_CVSS_score_for_years.vbar(x='x',top='counts',width=0.9,source=source, line_color='white', fill_color=factor_cmap('x',palette=Spectral6,factors=lst_years,start=1, end=2))
     plt_bar_chart_CVE_count_by_CVSS_score_for_years.xaxis.major_label_orientation = 1
     show(plt_bar_chart_CVE_count_by_CVSS_score_for_years)
     
