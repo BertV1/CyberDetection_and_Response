@@ -67,7 +67,21 @@
 
 ## Plots
 
-The first plot aims to graphically present the dataset 
+### I
+
+The first plot aims give a general overview of the CVEs of our datapool: we are counting the CVE based on their *CVE ID* for 1997-2002
+
+### II
+
+The second plot goes for a more nuanced direction. We are calculating the average CVSS score for each month in a given year. This is then plotted as a line chart, for the same time range as plot I: 1997 - 2002. The basis for the time is the publication date of the CVE, which in many cases has a different year than the CVE ID.
+
+### III
+
+For the third plot, we are counting the number of CVEs by year, based on the publication date of the CVE. The basis of this calculation are specific CVSS score brackets: [0-1], ]1-2],…,]9-10]. The ‘[’ & ’]‘ need to interpreted mathematically, in the sense that a CVSS score of 1 is included in the bracket [0-1]. A CVSS score of 1.1 for example will fall into the next bracket.
+
+The surprising results of this plot, bracket ]8-9] has almost no results, is a nice find.
+
+
 
 ## Addenda
 

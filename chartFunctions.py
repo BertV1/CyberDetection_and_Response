@@ -103,7 +103,7 @@ def bar_chart_CVE_count_by_CVSS_score_for_years(JSON_CVE_DATA,lst_years):
     lst_data_for_chosen_years = []
     for year in lst_years:
         lst_data_for_chosen_years.append(DF.getCVSSCountBracketsByYear(DF.getCVSSbyYear(lst_pubDate_and_cvss,year)))
-    lbl_cvssBrackets = ['[0-1]','[1-2]','[2-3]','[3-4]','[4-5]','[5-6]','[6-7]','[7-8]','[8-9]','[9-10]']
+    lbl_cvssBrackets = ['[0-1]',']1-2]',']2-3]',']3-4]',']4-5]',']5-6]',']6-7]',']7-8]',']8-9]',']9-10]']
     
     dataForChosenYears = {}
     dataForChosenYears['brackets'] = lbl_cvssBrackets
@@ -114,7 +114,7 @@ def bar_chart_CVE_count_by_CVSS_score_for_years(JSON_CVE_DATA,lst_years):
     
     x = [(cvssBracket,year) for cvssBracket in lbl_cvssBrackets for year in lst_years]
     counts = sum(zip(*lst_data_for_chosen_years),())
-    
+
     source = ColumnDataSource(data=dict(x=x,counts=counts))
     x_label = 'CVSS brackets'
     y_label = 'CVE Count'
