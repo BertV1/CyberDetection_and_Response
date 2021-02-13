@@ -23,7 +23,7 @@ def getUserInputForYears():
 
 JsonCVEs = prepareData('datafeeds/nvdcve-1.1-2002.json')
 chartChoice = input("Type '1' for Chart 1,\nType '2' for Chart 2\nType 3 for chart 3, 4 for 1 & 2\n CHART: ")
-CF.bar_chart_CVE_count_by_CVSS_score_for_years(JSON_CVE_DATA=JsonCVEs,lst_years='1999')
+#CF.bar_chart_CVE_count_by_CVSS_score_for_years(JSON_CVE_DATA=JsonCVEs,lst_years='1999')
 
 if int(chartChoice) == 1:
     CF.bar_chart_CVE_by_ID(JsonCVEs)
@@ -33,7 +33,9 @@ elif int(chartChoice) == 2:
 
     CF.line_chart_avg_CVE_per_month_by_year(JsonCVEs,DF.sortIntStrings(lst_preferredYears))
 elif int(chartChoice) == 3:
-    CF.bar_chart_CVE_count_by_CVSS_score_for_years(JsonCVEs,'1999')
+    lst_preferredYears = getUserInputForYears()
+
+    CF.bar_chart_CVE_count_by_CVSS_score_for_years(JsonCVEs,lst_preferredYears)
 elif int(chartChoice) == 4:
     getUserInputForYears()
     CF.bar_chart_CVE_by_ID(JsonCVEs)

@@ -1,7 +1,9 @@
 import dataFunctions as DF
-from bokeh.models import ColumnDataSource,ranges,LabelSet,Title
+from bokeh.models import ColumnDataSource,ranges,LabelSet,Title,FactorRange
 from bokeh.plotting import figure,show
 from bokeh.palettes import PuBu
+from bokeh.transform import factor_cmap
+from bokeh.palettes import Category20
 import random
 
 ####################################
@@ -9,6 +11,15 @@ import random
 ##    CVE COUNT BY CVE YEAR ID    ##
 ##                                ##
 ####################################
+
+def getYearForTitle(lst_years):
+    titleYear = ''
+    if len(lst_years) == 1:
+        titleYear = lst_years
+    else:
+        titleYear = lst_years[0]+'-'+lst_years[-1]
+
+    return titleYear
 
 def bar_chart_CVE_by_ID(JSON_CVE_DATA):
 
@@ -89,10 +100,23 @@ def line_chart_avg_CVE_per_month_by_year(JSON_CVE_DATA,lst_years):
 
 def bar_chart_CVE_count_by_CVSS_score_for_years(JSON_CVE_DATA,lst_years):
     lst_pubDate_and_cvss = DF.getCVEpubDateAndScore(JSON_CVE_DATA)
-    lst_pubDate_and_cvss_byYear = DF.getCVSSbyYear(lst_pubDate_and_cvss,lst_years)
-
-    data_forChosenYear = DF.getCVSSCountBracketsByYear(lst_pubDate_and_cvss_byYear)
+    lst_data_for_chosen_years = []
+    for year in lst_years:
+        lst_data_for_chosen_years.append(DF.getCVSSCountBracketsByYear(DF.getCVSSbyYear(lst_pubDate_and_cvss,year)))
     lbl_cvssBrackets = ['[0-1]','[1-2]','[2-3]','[3-4]','[4-5]','[5-6]','[6-7]','[7-8]','[8-9]','[9-10]']
+    
+    dataForChosenYears = {}
+    dataForChosenYears['brackets'] = lbl_cvssBrackets
+    if len(lst_years) == len(lst_data_for_chosen_years):
+        for i in range(len(lst_data_for_chosen_years)):
+            dataForChosenYears[year[i]] = lst_data_for_chosen_years[i]
+    
+    x = [(lbl_cvssBrackets,lst_years) for cvssBracket in lbl_cvssBrackets for year in lst_years]
+    counts = sum(zip(*lst_data_for_chosen_years,()))
+    source = ColumnDataSource(data=dict(x=x,counts=counts))
+
+
+
     x_label = 'CVSS brackets'
     y_label = 'CVE Count'
     
@@ -102,18 +126,25 @@ def bar_chart_CVE_count_by_CVSS_score_for_years(JSON_CVE_DATA,lst_years):
         toolbar_location='right',
         x_axis_label=x_label,
         y_axis_label=y_label,
-        x_range=lbl_cvssBrackets
+        x_range=FactorRange(*x),
+        
     )
 
+    titleYear = getYearForTitle(lst_years)
+
     plt_bar_chart_CVE_count_by_CVSS_score_for_years.add_layout(Title(
-        text='CVE count by CVSS score bracket for selected years',
+        text='CVE count by CVSS score bracket for'+titleYear,
         align='center',
         text_font_size='1.5em'),'above')
 
-    plt_bar_chart_CVE_count_by_CVSS_score_for_years.vbar(x=lbl_cvssBrackets,top=data_forChosenYear,width=0.9)
+    #plt_bar_chart_CVE_count_by_CVSS_score_for_years.vbar(x=lbl_cvssBrackets,top=data_forChosenYear,width=0.9)
 
+    plt_bar_chart_CVE_count_by_CVSS_score_for_years.vbar(x='x',top='counts',width=0.9,source=source, line_color='white', fill_color=factor_cmap('x',palette=Category20,factors=lst_years,start=1, end=2))
+    plt_bar_chart_CVE_count_by_CVSS_score_for_years.xaxis.major_label_orientation = 1
     show(plt_bar_chart_CVE_count_by_CVSS_score_for_years)
     
+
+
 
 
 possibleColours = ['aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure', 'beige', 'bisque', 'black', 'blanchedalmond', 'blue', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'fuchsia', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'gray', 'green', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'lime', 'limegreen', 'linen', 'magenta', 'maroon', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'navy', 'oldlace', 'olive', 'olivedrab', 'orange', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'purple', 'red', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'silver', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'white', 'whitesmoke', 'yellow', 'yellowgreen']

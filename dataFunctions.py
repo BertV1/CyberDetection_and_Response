@@ -49,37 +49,38 @@ def getCVSSavgByMonth(lst_pubdate_cvss_oneYear_oneMonth):
 # 0-1 1-2 2-3 3-4 4-5 5-6 6-7 7-8 8-9 9-10
 def getCVSSCountBracketsByYear(lst_pubDateANDcvssBYyear):
     lst_CVSS_count_brackets = [0]*10 # the first bracket contains the count for  0 to 1, the second bracket 1 to 2, ...
-    for pubdateANDcvss in lst_pubDateANDcvssBYyear:
-        if pubdateANDcvss[1]<=0:
-            lst_CVSS_count_brackets[0]+=1
-        else:
-            lst_CVSS_count_brackets[int(np.floor(pubdateANDcvss[1]-0.0001))] += 1
-            if pubdateANDcvss[1] > 4 and pubdateANDcvss[1] <=5:
-                print(pubdateANDcvss[1])
-                print(int(np.floor(pubdateANDcvss[1]+0.0001)))
-    return lst_CVSS_count_brackets
     # for pubdateANDcvss in lst_pubDateANDcvssBYyear:
-    #     cvss = pubdateANDcvss[1]
-    #     if cvss >= 0 and cvss <= 1:
-    #         lst_CVSS_count_brackets[0] += 1
-    #     if cvss > 1 and cvss <= 2:
-    #         lst_CVSS_count_brackets[1] += 1
-    #     if cvss > 2 and cvss <= 3:
-    #         lst_CVSS_count_brackets[2] += 1
-    #     if cvss > 3 and cvss <= 4:
-    #         lst_CVSS_count_brackets[3] += 1
-    #     if cvss > 4 and cvss <= 5:
-    #         lst_CVSS_count_brackets[4] += 1
-    #     if cvss > 5 and cvss <= 6:
-    #         lst_CVSS_count_brackets[5] += 1
-    #     if cvss > 6 and cvss <= 7:
-    #         lst_CVSS_count_brackets[6] += 1
-    #     if cvss > 7 and cvss <= 8:
-    #         lst_CVSS_count_brackets[7] += 1
-    #     if cvss > 8 and cvss <= 9:
-    #         lst_CVSS_count_brackets[8] += 1
-    #     if cvss > 9 and cvss <= 10:
-    #         lst_CVSS_count_brackets[9] += 1
+    #     if pubdateANDcvss[1]<=0:
+    #         lst_CVSS_count_brackets[0]+=1
+    #     else:
+    #         lst_CVSS_count_brackets[int(np.floor(pubdateANDcvss[1]-0.0001))] += 1
+    #         if pubdateANDcvss[1] > 4 and pubdateANDcvss[1] <=5:
+    #             print(pubdateANDcvss[1])
+    #             print(int(np.floor(pubdateANDcvss[1]+0.0001)))
+    # return lst_CVSS_count_brackets
+    for pubdateANDcvss in lst_pubDateANDcvssBYyear:
+        cvss = pubdateANDcvss[1]
+        if cvss >= 0 and cvss <= 1:
+            lst_CVSS_count_brackets[0] += 1
+        if cvss > 1 and cvss <= 2:
+            lst_CVSS_count_brackets[1] += 1
+        if cvss > 2 and cvss <= 3:
+            lst_CVSS_count_brackets[2] += 1
+        if cvss > 3 and cvss <= 4:
+            lst_CVSS_count_brackets[3] += 1
+        if cvss > 4 and cvss <= 5:
+            lst_CVSS_count_brackets[4] += 1
+        if cvss > 5 and cvss <= 6:
+            lst_CVSS_count_brackets[5] += 1
+        if cvss > 6 and cvss <= 7:
+            lst_CVSS_count_brackets[6] += 1
+        if cvss > 7 and cvss <= 8:
+            lst_CVSS_count_brackets[7] += 1
+        if cvss > 8 and cvss <= 9:
+            lst_CVSS_count_brackets[8] += 1
+        if cvss > 9 and cvss <= 10:
+            lst_CVSS_count_brackets[9] += 1
+    return lst_CVSS_count_brackets
 
 def getAverageCVSScountByMonth(lst_pubdate_cvss_oneYear):
     lst_avgCVSSbyMonth = []
