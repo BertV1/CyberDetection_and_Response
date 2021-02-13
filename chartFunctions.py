@@ -109,20 +109,19 @@ def bar_chart_CVE_count_by_CVSS_score_for_years(JSON_CVE_DATA,lst_years):
     dataForChosenYears['brackets'] = lbl_cvssBrackets
     if len(lst_years) == len(lst_data_for_chosen_years):
         for i in range(len(lst_data_for_chosen_years)):
-            dataForChosenYears[year[i]] = lst_data_for_chosen_years[i]
+            print(lst_years[i])
+            dataForChosenYears[lst_years[i]] = lst_data_for_chosen_years[i]
     
     x = [(cvssBracket,year) for cvssBracket in lbl_cvssBrackets for year in lst_years]
     counts = sum(zip(*lst_data_for_chosen_years),())
+    
     source = ColumnDataSource(data=dict(x=x,counts=counts))
-
-
-
     x_label = 'CVSS brackets'
     y_label = 'CVE Count'
     
     plt_bar_chart_CVE_count_by_CVSS_score_for_years = figure(
-        plot_width=1200,
-        plot_height=1000,
+        plot_width=1500,
+        plot_height=1200,
         toolbar_location='right',
         x_axis_label=x_label,
         y_axis_label=y_label,
@@ -133,14 +132,14 @@ def bar_chart_CVE_count_by_CVSS_score_for_years(JSON_CVE_DATA,lst_years):
     titleYear = getYearForTitle(lst_years)
 
     plt_bar_chart_CVE_count_by_CVSS_score_for_years.add_layout(Title(
-        text='CVE count by CVSS score bracket for'+titleYear,
+        text='CVE count by CVSS score bracket for '+titleYear,
         align='center',
-        text_font_size='1.5em'),'above')
-
-    #plt_bar_chart_CVE_count_by_CVSS_score_for_years.vbar(x=lbl_cvssBrackets,top=data_forChosenYear,width=0.9)
+        text_font_size='1.7em'),'above')
+    
 
     plt_bar_chart_CVE_count_by_CVSS_score_for_years.vbar(x='x',top='counts',width=0.9,source=source, line_color='white', fill_color=factor_cmap('x',palette=Spectral6,factors=lst_years,start=1, end=2))
     plt_bar_chart_CVE_count_by_CVSS_score_for_years.xaxis.major_label_orientation = 1
+    plt_bar_chart_CVE_count_by_CVSS_score_for_years.axis.axis_label_text_font_size='1.2em'
     show(plt_bar_chart_CVE_count_by_CVSS_score_for_years)
     
 
