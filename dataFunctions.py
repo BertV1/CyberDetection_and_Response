@@ -10,12 +10,15 @@ def getCVEIDs(cveJsonFile):
 
 def getCVEpubDateAndScore(cveJsonFile):
     #todo discarding entries after 2002
-    #todo only metric V2 items (97 are not baseMetricV2), none are V3
+    #todo only metric V2 items (97 are not baseMetricV2), none are V3 DONE
     CVE_pubDate_CVSS = []
     for cve in cveJsonFile['CVE_Items']:
         if 'baseMetricV2' in cve['impact']:
             CVE_pubDate_CVSS.append(list([cve['publishedDate'],cve['impact']['baseMetricV2']['cvssV2']['baseScore']]))
+        if 'baseMetricV3' in cve['impact']:
+            CVE_pubDate_CVSS.append(list([cve['publishedDate'],cve['impact']['baseMetricV3']['cvssV3']['baseScore']]))
     return CVE_pubDate_CVSS
+
 
 def getCVSSbyYear(lst_pubdateAndCvss,year):
     lst_pubDateANDcvssBYyear = []
@@ -43,6 +46,7 @@ def getCVSSavgByMonth(lst_pubdate_cvss_oneYear_oneMonth):
         return cvssSum / cvssCount
     else:
         return 0
+
 # we suppose we already have the json file, and have performed the necessary queries to come to this point
 # but instead of now computing the avg cvss score per month for this year, we are going to count the cve's by their score 
 # dat struct: lst_pubDateANDcvssBYyear = [[pubdate,cvss],[pubdate,cvss]...]
@@ -130,26 +134,32 @@ def getAverageCVSScountByMonth(lst_pubdate_cvss_oneYear):
         #print(getCVSSavgByMonth(month))
     return lst_avgCVSSbyMonth
 
-def getCVEbyYear(CVEIDs):
-    cve1999 = 0
-    cve2000 = 0
-    cve2001 = 0
-    cve2002 = 0
-    rest = 0
+def getCVEID_cnt_byYear(CVEIDs):
+    dct_cntByCVE_ID = {}
+    lst_cveStr_prefixes = ['CVE-199','CVE-200','CVE-201','CVE-202']
     for cveID in CVEIDs:
-        if 'CVE-1999' in cveID:
-            cve1999 += 1
-        elif 'CVE-2000' in cveID:
-            cve2000 += 1
-        elif 'CVE-2001' in cveID:
-            cve2001 += 1
-        elif 'CVE-2002' in cveID:
-            cve2002 += 1
-        else:
-            rest += 1
-            print(cveID)
-    if rest == 0: #todo: c
-        return (list([cve1999,cve2000,cve2001,cve2002]))
+        #if cveStr1 in cveID:
+        for prefix in lst_cveStr_prefixes:
+            for i in range(10):
+                if prefix+str(i) in cveID:
+                    if prefix+str(i) in dct_cntByCVE_ID:    
+                        dct_cntByCVE_ID[prefix+str(i)] += 1
+                    else:
+                        dct_cntByCVE_ID.update({prefix+str(i):1})
+    # for k,v in dct_cntByCVE_ID.items():
+    #     print(k,'->',v)
+    return dct_cntByCVE_ID
+
+def getCVE_count_by_pubdateYear(jsonCVEdata, lst_years):
+    dct_cntBypubDateyear = {}
+    for year in lst_years:
+        for cve in jsonCVEdata['CVE_Items']:
+            if str(year) in cve['publishedDate']:
+                if str(year) in dct_cntBypubDateyear:
+                    dct_cntBypubDateyear[str(year)] += 1
+                else:
+                    dct_cntBypubDateyear[str(year)] = 1
+    return dct_cntBypubDateyear
 
 def sortIntStrings(lst_stringsThatAreInts):
     numbers = [int(x) for x in lst_stringsThatAreInts]

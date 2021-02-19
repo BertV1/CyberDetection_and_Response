@@ -17,31 +17,64 @@ def getYearForTitle(lst_years):
     if len(lst_years) == 1:
         titleYear = lst_years
     else:
-        titleYear = lst_years[0]+'-'+lst_years[-1]
+        #titleYear = lst_years[0]+'-'+lst_years[-1]
+        titleYear = '%s- %s' % (lst_years[0],lst_years[-1])
 
     return titleYear
 
 def bar_chart_CVE_by_ID(JSON_CVE_DATA):
 
     lst_CVE_IDs = DF.getCVEIDs(JSON_CVE_DATA)
-    lst_cnt_CVEs_By_Year = DF.getCVEbyYear(lst_CVE_IDs)
+    dct_cntByCVE_ID = DF.getCVEID_cnt_byYear(lst_CVE_IDs)
 
-    years = ['1999','2000','2001','2002']
+    #years = ['1999','2000','2001','2002','2003','2004','2005','2006']
     x_label = 'Years'
     y_label = 'Number of CVEs'
 
-    lbl_src = ColumnDataSource(dict(x=years,y=lst_cnt_CVEs_By_Year))
+    lbl_src = ColumnDataSource(data=dict(x=list(dct_cntByCVE_ID.keys()),y=list(dct_cntByCVE_ID.values())))
 
     plt_bar_chart_CVE_by_ID = figure(
         plot_height=750,
-        plot_width=600,
+        plot_width=900,
         toolbar_location='right',
         x_axis_label=x_label,
         y_axis_label=y_label,
         title='CVE-ID based total CVE count by Year: 1999-2002',
         x_minor_ticks=6,
         x_range=lbl_src.data['x'],
-        y_range=ranges.Range1d(start=0,end=3000)
+        y_range=ranges.Range1d(start=0,end=7500)
+    )
+
+    labels = LabelSet(x='x',y='y', text='y', level='glyph',
+                x_offset=-13.5, y_offset=0, source=lbl_src,
+                render_mode='canvas')
+    
+    plt_bar_chart_CVE_by_ID.vbar(source=lbl_src,x='x',top='y',bottom=0,width=0.7,color=PuBu[6][3])
+    plt_bar_chart_CVE_by_ID.add_layout(labels)
+
+    show(plt_bar_chart_CVE_by_ID)
+
+def bar_chart_CVE_by_YEAR(JSON_CVE_DATA,lst_years):
+
+    dct_cntBypubDateyear = DF.getCVE_count_by_pubdateYear(JSON_CVE_DATA,lst_years)
+    lbl_src = ColumnDataSource(data=dict(x=list(dct_cntBypubDateyear.keys()),y=list(dct_cntBypubDateyear.values())))
+    for k,v in dct_cntBypubDateyear.items():
+        print(k,'->',v)
+
+    x_label = 'Years'
+    y_label = 'Number of CVEs'
+    titleYear = getYearForTitle(list(dct_cntBypubDateyear.keys()))
+
+    plt_bar_chart_CVE_by_ID = figure(
+        plot_height=750,
+        plot_width=900,
+        toolbar_location='right',
+        x_axis_label=x_label,
+        y_axis_label=y_label,
+        title='CVE publish date based total CVE count by Year: '+ titleYear,
+        x_minor_ticks=6,
+        x_range=lbl_src.data['x'],
+        y_range=ranges.Range1d(start=0,end=8000)
     )
 
     labels = LabelSet(x='x',y='y', text='y', level='glyph',
@@ -126,7 +159,6 @@ def bar_chart_CVE_count_by_CVSS_score_for_years(JSON_CVE_DATA,lst_years):
         x_axis_label=x_label,
         y_axis_label=y_label,
         x_range=FactorRange(*x),
-        
     )
 
     titleYear = getYearForTitle(lst_years)

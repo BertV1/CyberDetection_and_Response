@@ -4,3 +4,5 @@ __pycache__/dataFunctions\.cpython-39\.pyc
 *.html
 
 *.pyc
+
+dataFeeds/nvdcve-1\.1-2002-2010\.json
